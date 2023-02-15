@@ -105,3 +105,24 @@ Third: transform the predicted log prices to real prices with np.exp.
  Result:  A.  The predicted price for first car( Yaris year 2022, with 0 mileage, enginesize 1.6) is 11114 pounds. 
           B. The predicted price for second car(Yaris year 2020, with 20000 miles,enginesize 1.6) is 10322 pounds.
           C. The predicted price for third car(Yaris year 2012 with 200000 miles, enginesize 1.0) is 4741 pounds.
+          
+ The code for **DECISION TREE REGRESSION MODEL** is [here](decision-tree)         
+          
+**6. GRADIENT BOOSTING REGRESSOR MODEL
+The result is a 95.72% score and a mean squared error is 9.8%. THIS IS THE BEST SCORE FOR ALL MODELS**
+
+We use the same procedure as other models and create a dataframe X_new with the following steps:
+
+First: get data X_new with three cars to predict prices:  model: yaris, years: 2022,2020,2012, transmision:     all  manual, mileage: 0,20000,200000,  fueltype all petrol, tax all 100, mpg: 60,50,40 and enginesize:         1.6,1.6 and 1.0. 
+
+Second: predict prices out of the gradient boosting regressor model above.
+
+Third: transform the predicted log prices to real prices with np.exp.
+
+The results: a.  1. The predicted price for first car( Yaris year 2022, with 0 mileage, enginesize 1.6) is 12227 pounds.
+ b. The predicted price for second car(Yaris year 2020, with 20000 miles,enginesize 1.6) is 10182 pounds.
+ c. The predicted price for third car(Yaris year 2012 with 200000 miles, enginesize 1.0) is 4713 pounds.
+ 
+ The code for **GRADIENT BOOSTING REGRESSOR MODEL** is [here](gradient-boosting)
+ 
+ **7. CONCLUSION** After using linear regression, ridge, decision tree regression, and gradient boosting regression models, the best is the  gradient boosting  regression model with an r2 score of  95.72%. It means that for junior salesman, the model works in aproximately  that percentage. This will help junior salespeople predict prices correctly building  their confidence to  generate more sales.          
