@@ -1,0 +1,114 @@
+#  import all libraries necessary for the project
+#
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.style as style
+import seaborn as sns
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.tree import DecisionTreeRegressor
+from sklearn.preprocessing import LabelEncoder
+from sklearn.preprocessing import PowerTransformer
+from sklearn.metrics import r2_score,mean_squared_error
+plt.style.use('ggplot')
+
+# read toyota's csv file in data folder
+#
+cars = pd.read_csv('data/toyota.csv')
+
+#now convert all category data to numeric to use any machine learning model
+
+#convert categorical data into numeric using find and replace method
+#convert categorical transmission  ['Manual' 'Automatic' 'Semi-Auto' 'Other'] to numeric
+numeric_var = {"transmission":{"Manual":1,"Automatic":2,"Semi-Auto":3,"Other":4}}
+cars = cars.replace(numeric_var) 
+
+#convert categorical typeFuel  ['Petrol' 'Other' 'Hybrid' 'Diesel'] to numeric
+numeric_var = {"fuelType":{"Petrol":1,"Hybrid":2,"Diesel":3,"Other":4}}
+cars = cars.replace(numeric_var) 
+
+#convert categorical model [' GT86' ' Corolla' ' RAV4' ' Yaris' ' Auris' ' Aygo' ' C-HR' ' Prius'
+# ' Avensis' ' Verso' ' Hilux' ' PROACE VERSO' ' Land Cruiser' ' Supra'
+# ' Camry' ' Verso-S' ' IQ' ' Urban Cruiser'] to numeric
+
+numeric_var = {'model':{' GT86':1, ' Corolla':2, ' RAV4':3, ' Yaris':4, ' Auris':5, ' Aygo':6, ' C-HR':7, ' Prius':8, ' Avensis':9, ' Verso':10, ' Hilux':11, ' PROACE VERSO':12, ' Land Cruiser':13, ' Supra':14,' Camry':15, ' Verso-S':16, ' IQ':17, ' Urban Cruiser':18}}
+cars = cars.replace(numeric_var) 
+
+#print head of dataframe to check how categorical data changed to numeric
+print(cars.head())
+
+
+# graph price vs mileage
+# you see a negative correlation... more mileage, less price
+#
+names = cars.drop('price',axis=1).columns
+
+X = cars.drop('price',axis=1).values
+y = cars['price'].values
+x_mileage = X[:,3]
+x_mileage = x_mileage.reshape(-1,1)
+y = y.reshape(-1,1)
+plt.scatter(x_mileage,y)
+plt.xlabel('mileage')
+plt.ylabel('price')
+plt.show()
+
+# do the linear regression model and graph the predictive score. the predictive score
+#  goes from price 14000 pounds at  zero mileage to price 7000 pounds  at 70000 miles 
+reg = LinearRegression()
+reg.fit(x_mileage,y)
+prediction_space = np.linspace(min(x_mileage),max(x_mileage)).reshape(-1,1)
+plt.scatter(x_mileage,y,color='blue')
+plt.plot(prediction_space,reg.predict(prediction_space),color='black',linewidth=3)
+plt.xlabel('mileage')
+plt.ylabel('price')
+plt.show()
+
+# change price to a log price
+
+y = np.log(cars['price']).values
+y = y.reshape(-1,1)
+X = cars.drop('price',axis=1).values
+
+
+#transform numeric data into scaler data 
+# define the scaler 
+scaler = PowerTransformer()
+# fit and transform the train set
+X[:, [0,2,3]] = scaler.fit_transform(X[:, [0,2,3]])
+
+
+#check the score using train test split.  The score between X_test and y_test is 88%.
+
+X_train, X_test, y_train, y_test = train_test_split(X,y,test_size=0.3,random_state=42)
+#X_train = X_train.astype(float)
+#y_train = y_train.astype(float)
+reg_all = LinearRegression()
+reg_all.fit(X_train,y_train)
+y_pred = reg_all.predict(X_test)
+print('score: ',reg_all.score(X_test,y_test))
+
+#
+#  the r2_score between y_test and y_pred is 88% and the root mean square error is 16%
+#
+print('Linear Regression r2_score: ',r2_score(y_test,y_pred))
+print('Linear Regression Root Mean Squared Error: ',np.sqrt(mean_squared_error(y_test,y_pred)))
+
+#
+#   the model es reg_all.  The reg_all.coef_ is a numpy array of the importance of each feature in the model
+#   Here we show in a bar graph the importance of each column or feature. We see that
+#   engine size is the most import feature for this model, followed by year, transmission and mileage.
+#
+resultdict = {}
+for i in range(len(names)):
+    resultdict[names[i]] = float(reg_all.coef_[:,i])
+print(resultdict)    
+plt.bar(resultdict.keys(),resultdict.values())
+plt.xticks(rotation='vertical')
+plt.title('Feature Importance in Linear Regression Model');
+    
+#plt.bar(resultdict.keys(),resultdict.values())
+#plt.xticks(rotation='vertical')
+#plt.title('Feature Importance in Linear Regression Model');
+
