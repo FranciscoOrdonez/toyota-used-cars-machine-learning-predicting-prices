@@ -77,7 +77,7 @@ The code for **LINEAR REGRESSION** is [here](linear-regression)
 
 **4. RIDGE AND GRIDSEARCHCV MODELS**
 
-In this analysis we prepare the data converting the category data to numbers, preprocess the numeric data by scaling with min-max scaling, log the price data, and model with Ridge, get a score of 88%, r2 score of 88% and a root mean square error of 16%, go to GripSearchCV model, find the best parameter for Ridge, which is alpha equals to 0.0, and get a score of 88%.
+In this analysis we prepare the data converting the category data to numbers, preprocess the numeric data by scaling with min-max scaling, log the price data, and model with Ridge, get a score of 88%,**r2 score of 88% and a root mean square error of 16%, go to GripSearchCV model, find the best parameter for Ridge, which is alpha equals to 0.0, and get a score of 88%**.
 
 The code for **RIDGE AND GRIDSEARCHCV REGRESSION MODELS** is [here](ridge)
 
@@ -92,14 +92,15 @@ Now, we find that  the most important features for the model are: 'engine size',
 ![download](https://user-images.githubusercontent.com/53232113/219208053-80964ece-1528-4913-92c1-bd35b9f5ef0a.png)
 
 Now, we use all features to model with tree regression modeling. The features are:
-['model','year','transmission','mileage','fuelType','tax','mpg','engineSize'], split train and test data, fit it with train data, predict and get an r2 score of 94.76 % with a root mean squared error of 10.87%.
+['model','year','transmission','mileage','fuelType','tax','mpg','engineSize'], split train and test data, fit it with train data, predict and get an **r2 score of 94.76 % with a root mean squared error of 10.87%**.
+
 Finally we create a dataframe X_new with the following steps:
 
 First: get data X_new with three cars to predict prices:  model: yaris, years: 2022,2020,2012, transmision:     all  manual, mileage: 0,20000,200000,  fueltype all petrol, tax all 100, mpg: 60,50,40 and enginesize:         1.6,1.6 and 1.0. 
 
 Second: predict prices out of the decision tree regression model above.
  
- Third: transform the predicted log prices to real prices with np.exp.
+Third: transform the predicted log prices to real prices with np.exp.
  
  Result:   The predicted price for first car( Yaris year 2022, with 0 mileage, enginesize 1.6) is 11114 pounds.
  
