@@ -1,0 +1,70 @@
+#  ridge modeling and gridSeachCV for ridge model
+#  result: same as linearRegression in r2 score   ===    88% and
+#   ridge 
+#  gridSearchCV 
+#
+# Start coding here...prediction model
+#1. convert categorical variables into numbers
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+from sklearn import preprocessing
+from sklearn.model_selection import cross_val_score
+#read csv to dataframe df
+df = pd.read_csv('data/toyota.csv')
+
+#convert categorical data into numeric using find and replace method
+#convert categorical transmission  ['Manual' 'Automatic' 'Semi-Auto' 'Other'] to numeric
+numeric_var = {"transmission":{"Manual":1,"Automatic":2,"Semi-Auto":3,"Other":4}}
+df = df.replace(numeric_var) 
+
+#convert categorical typeFuel  ['Petrol' 'Other' 'Hybrid' 'Diesel'] to numeric
+numeric_var = {"fuelType":{"Petrol":1,"Hybrid":2,"Diesel":3,"Other":4}}
+df = df.replace(numeric_var)
+
+#convert categorical model [' GT86' ' Corolla' ' RAV4' ' Yaris' ' Auris' ' Aygo' ' C-HR' ' Prius'
+# ' Avensis' ' Verso' ' Hilux' ' PROACE VERSO' ' Land Cruiser' ' Supra'
+# ' Camry' ' Verso-S' ' IQ' ' Urban Cruiser'] to numeric
+
+numeric_var = {'model':{' GT86':1, ' Corolla':2, ' RAV4':3, ' Yaris':4, ' Auris':5, ' Aygo':6, ' C-HR':7, ' Prius':8, ' Avensis':9, ' Verso':10, ' Hilux':11, ' PROACE VERSO':12, ' Land Cruiser':13, ' Supra':14,' Camry':15, ' Verso-S':16, ' IQ':17, ' Urban Cruiser':18}}
+df = df.replace(numeric_var)
+
+#print head of dataframe to check how categorical data changed to numeric
+print(df.head())
+print(df.describe())
+print(df.info())
+
+# try ridge regression.. it uses alpha to regularization result:  r2_score 88% and mean square error: 16%
+# try  gridsearchCV model, and gets best parameters for ridge which is alpha=0.0 and 
+#                          result:  r2_score 88% 
+from sklearn.linear_model import Ridge
+from sklearn.model_selection import GridSearchCV
+## Divide data in  train and testfrom sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split
+
+
+
+feature_cols = ['year','transmission','fuelType','engineSize','model','mileage']
+price_col = ['price']
+X = df[feature_cols] # Features
+y = df[price_col] # Target variable
+y['price'] = np.log(y['price'])
+min_max_scaler = preprocessing.MinMaxScaler()
+X[['year','engineSize','mileage']] = min_max_scaler.fit_transform(X[['year','engineSize','mileage']])
+param_grid = {'alpha':np.arange(0,10)}
+ridge = Ridge(alpha=0,normalize=True)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+ridge.fit(X_train, y_train)
+print('ridge score: ',ridge.score(X_test,y_test))
+from sklearn.metrics import r2_score,mean_squared_error
+y_pred = ridge.predict(X_test)
+print('ridge r2_score: ',r2_score(y_test,y_pred))
+print('ridge Root Mean Squared Error: ',np.sqrt(mean_squared_error(y_test,y_pred)))
+
+ridge_cv = GridSearchCV(ridge,param_grid,cv=5)
+ridge_cv.fit(X_train, y_train)
+y_pred = ridge_cv.predict(X_test)
+print(ridge_cv.best_params_)
+print(ridge_cv.best_score_)
+print(ridge_cv.score(X,y))
+print('Grid Search CV of ridge r2_score: ',r2_score(y_test,y_pred))
