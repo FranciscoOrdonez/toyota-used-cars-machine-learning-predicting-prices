@@ -2,9 +2,9 @@
 
 A Toyota used cars dealer in England has been decreasing their sales in the last months.  Also, the dealer has been contracting junior salesman.  The manager thinks that the reason for decreasing sales is the lack of knowledge in used cars prices by the junior salesman.  The manager wants to have a   fast and reliable system to predict prices correctly for the Junior Salesman that can help them give the clients the correct price of the used cars. The manager has delivered data from the business with sales of Toyota used cars with year of fabrication,  different models, mileage, fuel type, transmission, engine size, tax and price.  He asks, with this data can you predict prices correctly to give the junior salesmen a reliable reference?
 Here we are going to show a machine learning model for this business  that solves in a great percentaje the problem.
-For that, there is a data validation, and exploratory analysis of the data.  Then, there is an analysis of the best of four machine learning models to use to predict the best reliable and correct price of used cars.  Finally,  the conclusion is that the reliable predictive price for used cars is possible. This  will help junior salespeople predict prices correctly,  building  their confidence to not lose clients   and  generate more sales in the future.
+For that, there is a data validation(1 below), and exploratory analysis of the data(2 below).  Then, there is an analysis of the best(6 below) of four machine learning models(3,4,5,6 below) to use to predict the best reliable and correct price of used cars.  Finally,  the conclusion(7 below) is that the reliable predictive price for used cars is possible. This  will help junior salespeople predict prices correctly,  building  their confidence to not lose clients   and  generate more sales in the future.
 
-DATA VALIDATION
+#1. DATA VALIDATION
 
 This data set has 6738 rows, 9 columns. I have validated all variables and I have not made any changes after validation. All the columns are just as described in the data dictionary:
 
@@ -29,7 +29,7 @@ This data set has 6738 rows, 9 columns. I have validated all variables and I hav
 The code for DATA VALIDATION is [here](data-validation)
 
 
-EXPLORATORY ANALYSIS
+#2. EXPLORATORY ANALYSIS
 
 TARGET VARIABLE: PRICE... We analyze price and change to log scale. The mean price for a car is 12522 pounds, and the price converted to a log number is 9.32. We will be using the log price for the machine learning models.
 
@@ -52,3 +52,17 @@ analyzed by boxplot graphs, there is a wider distribution on model GT86, RAV4 an
 ![download](https://user-images.githubusercontent.com/53232113/219169489-1a1d1eca-0d55-42f8-976b-bbd90bd99779.png)
 
 The code for EXPLORATORY ANALYSIS is [here](exploratory)
+
+#3. LINEAR REGRESSION MODEL
+
+First: import all libraries used for linear regression such as pandas. numpy, matplotlib, Linear Regression, etc.
+
+Second: there is a conversion of all category data to numeric for three features: transmission, fuel type and model, with the pandas replace method. For example the fuel type "Petrol" is converted to number "1".
+
+Third: there is a scatter plot with two features, price and mileage. Millage is the feature with strongest correlation to price, and over the same plot there is a predicted line with the regression model, and predicts that the price of cars goes down to half of the inicial in aproximatelly 100000 miles.
+
+Forth: we change price to a log price and numeric data such as mileage, year and engine size to scalar data. We have to have scalar and log data before using our machine learning model.
+
+Fifth: we check the score using train test split with the linear regression model of train data and score with test data, get a 88% score, use the #r2_score between the y test data and the y predict, get and 88%, and use the square root of the mean_squared_error between the y test and the y predict and get a 16.4%.
+
+Sixth: on feature importance,the most important predictor for our target price is engine size, followed by year of manufacturing, transmission and mileage.
