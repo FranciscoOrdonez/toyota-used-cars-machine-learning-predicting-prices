@@ -26,7 +26,7 @@ This data set has 6738 rows, 9 columns. I have validated all variables and I hav
 
 - engineSize: 16 possible values without missing values, same as the description. No cleaning is needed.
 
-The code for DATA VALIDATION is [here](data validation).
+The code for DATA VALIDATION is [here](data-validation)
 
 
 
