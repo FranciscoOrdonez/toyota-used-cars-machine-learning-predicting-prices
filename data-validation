@@ -24,3 +24,7 @@ cars = pd.read_csv('DATA/toyota.csv')
 #
 cars.head()
 
+# show cars's dataframe columns. There are 9 column.: model, year, price, transmission, mileage
+# fuelType, tax, mpg, engineSize
+cars.columns
+
