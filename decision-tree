@@ -1,0 +1,142 @@
+# import all libraries necesary for the decision tree regression modeling
+#1. convert categorical variables into numbers
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+from sklearn import preprocessing
+from sklearn.model_selection import cross_val_score
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import scale
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LinearRegression
+from sklearn.pipeline import Pipeline
+from sklearn.metrics import accuracy_score
+from sklearn.metrics import r2_score,mean_squared_error
+from sklearn.metrics import classification_report
+from sklearn.tree import DecisionTreeRegressor
+
+#read csv to dataframe df
+df = pd.read_csv('data/toyota.csv')
+
+#convert categorical data into numeric using find and replace method
+#convert categorical transmission  ['Manual' 'Automatic' 'Semi-Auto' 'Other'] to numeric
+numeric_var = {"transmission":{"Manual":1,"Automatic":2,"Semi-Auto":3,"Other":4}}
+df = df.replace(numeric_var) 
+
+#convert categorical typeFuel  ['Petrol' 'Other' 'Hybrid' 'Diesel'] to numeric
+numeric_var = {"fuelType":{"Petrol":1,"Hybrid":2,"Diesel":3,"Other":4}}
+df = df.replace(numeric_var)
+
+#convert categorical model [' GT86' ' Corolla' ' RAV4' ' Yaris' ' Auris' ' Aygo' ' C-HR' ' Prius'
+# ' Avensis' ' Verso' ' Hilux' ' PROACE VERSO' ' Land Cruiser' ' Supra'
+# ' Camry' ' Verso-S' ' IQ' ' Urban Cruiser'] to numeric
+
+numeric_var = {'model':{' GT86':1, ' Corolla':2, ' RAV4':3, ' Yaris':4, ' Auris':5, ' Aygo':6, ' C-HR':7, ' Prius':8, ' Avensis':9, ' Verso':10, ' Hilux':11, ' PROACE VERSO':12, ' Land Cruiser':13, ' Supra':14,' Camry':15, ' Verso-S':16, ' IQ':17, ' Urban Cruiser':18}}
+df = df.replace(numeric_var)
+
+#print head of dataframe to check how categorical data changed to numeric
+print(df.head())
+
+#
+#   for this model use only five features and convert price to log price with np.log
+#
+feature_cols = ['year','transmission','fuelType','engineSize','model','mileage']
+price_col = ['price']
+X = df[feature_cols] # Features
+y = df[price_col] # Target variable
+y['price'] = np.log(y['price'])
+
+#
+#      split train data with test data with train_test_split, use model DecisionTreeRegressor,
+#      fit the train data y predict the test data into y_pred, get the r2_score which is 94.4% and
+#      the root mean squared error which si 11.1%
+#
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+dt = DecisionTreeRegressor(max_depth=10, min_samples_split=2,random_state=42)
+dt.fit(X_train,y_train)
+y_pred = dt.predict(X_test)
+
+
+print('decision tree r2_score: ',r2_score(y_test,y_pred))
+print('decision tree Root Mean #SquaredError:',np.sqrt(mean_squared_error(y_test,y_pred)))
+#print('decision tree accuracy score:',accuracy_score(y_test,y_pred))
+
+# chech the best max_depth for this model and plot the train r2 score and the test r2 score from 1 to 50 the
+#  maximum depth, and watch that the best test r2 score is when the maximun depth for the decision
+#  tree regressor model is 10
+
+train_score = []
+test_score = []
+max_score = 0
+max_pair = (0,0)
+
+for i in range(1,50):
+    tree = DecisionTreeRegressor(max_depth=i,random_state=42)
+    tree.fit(X_train,y_train)
+    y_pred = tree.predict(X_test)
+    train_score.append(tree.score(X_train,y_train))
+    test_score.append(r2_score(y_test,y_pred))
+    test_pair = (i,r2_score(y_test,y_pred))
+    if test_pair[1] > max_pair[1]:
+        max_pair = test_pair
+
+fig, ax = plt.subplots()
+ax.plot(np.arange(1,50), train_score, label = "Training R^2",color='lightcoral')
+ax.plot(np.arange(1,50), test_score, label = "Testing R^2",color='lime')
+print(f'Best max_depth is: {max_pair[0]} \nTesting R^2 is: {max_pair[1]}')
+
+# chech the importance of features
+importance = dt.feature_importances_
+
+f_importance = {}
+for i in range(len(feature_cols)):
+     f_importance[feature_cols[i]] = importance[i]
+        
+plt.bar(f_importance.keys(),f_importance.values())
+plt.xticks(rotation='vertical')
+plt.title('Feature Importance in Decision Tree Regression Model');
+
+#
+#   Now, use all  nine  features for modeling and use log price using np.log
+#
+#
+feature_cols =  ['model','year','transmission','mileage','fuelType','tax','mpg','engineSize']
+price_col = ['price']
+X = df[feature_cols] # Features
+y = df[price_col] # Target variable
+y['price'] = np.log(y['price'])
+
+#
+# Now split data into train and test and use de DecisionTreeRegressor model, fit it with train data, and get # # prediction out of test data, and find r2-score between y_test and y_pred
+# The result is a 94.7% score and a mean squared error of 10.87%.
+#
+#
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+dt = DecisionTreeRegressor(max_depth=10, min_samples_split=2,random_state=42)
+dt.fit(X_train,y_train)
+y_pred = dt.predict(X_test)
+
+print('score:',dt.score(X_test,y_test))
+print('decision tree r2_score: ',r2_score(y_test,y_pred))
+print('decision tree Root Mean #SquaredError:',np.sqrt(mean_squared_error(y_test,y_pred)))
+
+
+# X_new is a created dataframe converted from a dictionary of three records which represent three cars
+X_new = pd.DataFrame.from_dict({
+    'model':[4,4,4],'year':[2022,2020,2012],'transmission':[1,1,1],'mileage':[0,20000,200000],'fuelType':[1,1,1],'tax':[100,100,100],'mpg':[60,50,40],'engineSize':[1.6,1.6,1.0]})
+#
+# print three cars with 8 features each (model, year, transmission, mileage, fueltype, tax, mpg, engineSize)
+print(X_new)
+
+#
+#  predict prices of three cars with the decision tree regression model above in y_pred
+#
+y_pred = dt.predict(X_new)
+
+#
+#  convert the log file prices to normal prices with command np.exp
+
+z = np.exp(y_pred)
+# print the predicted prices of three cars:  11114, 10322 and 4741 pounds
+print(z)
