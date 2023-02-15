@@ -1,0 +1,26 @@
+# Use this cell to begin, and add as many cells as you need to complete your analysis!
+#
+# get all the necessary libraries for the analysis
+#
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.style as style
+import seaborn as sns
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.tree import DecisionTreeRegressor
+from sklearn.preprocessing import LabelEncoder
+from sklearn.preprocessing import PowerTransformer
+from sklearn.metrics import r2_score,mean_squared_error
+plt.style.use('ggplot')
+
+#read the toyota csv file from folder DATA
+#
+cars = pd.read_csv('DATA/toyota.csv')
+
+#
+#   check the first records of dataframe cars. 
+#
+cars.head()
+
