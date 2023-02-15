@@ -102,8 +102,6 @@ Second: predict prices out of the decision tree regression model above.
  
 Third: transform the predicted log prices to real prices with np.exp.
  
- Result:   The predicted price for first car( Yaris year 2022, with 0 mileage, enginesize 1.6) is 11114 pounds.
- 
-          The predicted price for second car(Yaris year 2020, with 20000 miles,enginesize 1.6) is 10322 pounds.
-          
-         The predicted price for third car(Yaris year 2012 with 200000 miles, enginesize 1.0) is 4741 pounds.
+ Result:  A.  The predicted price for first car( Yaris year 2022, with 0 mileage, enginesize 1.6) is 11114 pounds. 
+          B. The predicted price for second car(Yaris year 2020, with 20000 miles,enginesize 1.6) is 10322 pounds.
+          C. The predicted price for third car(Yaris year 2012 with 200000 miles, enginesize 1.0) is 4741 pounds.
