@@ -61,8 +61,14 @@ Second: there is a conversion of all category data to numeric for three features
 
 Third: there is a scatter plot with two features, price and mileage. Millage is the feature with strongest correlation to price, and over the same plot there is a predicted line with the regression model, and predicts that the price of cars goes down to half of the inicial in aproximatelly 100000 miles.
 
+
+
+![download](https://user-images.githubusercontent.com/53232113/219202279-d9d6e92e-c9f4-4ca8-aaea-674e885a0dbf.png)
+
 Forth: we change price to a log price and numeric data such as mileage, year and engine size to scalar data. We have to have scalar and log data before using our machine learning model.
 
 Fifth: we check the score using train test split with the linear regression model of train data and score with test data, get a 88% score, use the **r2_score between the y test data and the y predict, get and 88%, and use the square root of the mean_squared_error between the y test and the y predict and get a 16.4%**.
 
 Sixth: on feature importance,the most important predictor for our target price is engine size, followed by year of manufacturing, transmission and mileage.
+
+![download](https://user-images.githubusercontent.com/53232113/219202349-8cada64d-df24-4c5b-a054-9919e82299cf.png)
