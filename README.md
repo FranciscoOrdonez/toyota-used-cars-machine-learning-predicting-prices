@@ -37,11 +37,16 @@ TARGET VARIABLE: PRICE... We analyze price and change to log scale. The mean pri
 
 ![download](https://user-images.githubusercontent.com/53232113/219168418-164b5aeb-e057-4c77-9916-066ec727f88f.png)
 
-We see that there is a negative correlation with mileage(-0.39), and positive correlation with year(0.55). There is no correlation with mpg. , analyzed by boxplot graphs, there is a wider distribution on model GT86, RAV4 and Avensis, and a narrow distribution on Corollas, CH_r and Prius. On, transmision types, there is a wider distribution on Automatic and narrow on Manual, On fuel type, there is a narrow distribution on Petrol fuel.
+We see that there is a negative correlation with mileage(-0.39), and positive correlation with year(0.55). There is no correlation with mpg. , 
 ![download](https://user-images.githubusercontent.com/53232113/219169324-27ab7071-0de7-4225-b51f-ba08237f4e95.png)
 
-In relation to year of manufacturing, most cars in the set have been manufactured in 2017 and above. With category data, most cars in the data are model Yaris or Aygo with manual transmission, with Petro fuel and 1.0 engine size. In data distribution by models
 ![download](https://user-images.githubusercontent.com/53232113/219169364-3531a9b4-391e-4271-8c52-f8f4dd66db4a.png)
+
+In relation to year of manufacturing, most cars in the set have been manufactured in 2017 and above and most cars are 1.0 engineSize. 
 ![download](https://user-images.githubusercontent.com/53232113/219169405-dd5934b4-68de-4f1e-a1ad-31facc9529b9.png)
+
+With category data, most cars in the data are model Yaris or Aygo with manual transmission, with Petro fuel 
 ![download](https://user-images.githubusercontent.com/53232113/219169451-c2be0cd0-8194-44ef-94c3-da313b72380a.png)
+
+analyzed by boxplot graphs, there is a wider distribution on model GT86, RAV4 and Avensis, and a narrow distribution on Corollas, CH_r and Prius. On, transmision types, there is a wider distribution on Automatic and narrow on Manual, On fuel type, there is a narrow distribution on Petrol fuel.
 ![download](https://user-images.githubusercontent.com/53232113/219169489-1a1d1eca-0d55-42f8-976b-bbd90bd99779.png)
