@@ -50,3 +50,5 @@ With category data, most cars in the data are model Yaris or Aygo with manual tr
 
 analyzed by boxplot graphs, there is a wider distribution on model GT86, RAV4 and Avensis, and a narrow distribution on Corollas, CH_r and Prius. On, transmision types, there is a wider distribution on Automatic and narrow on Manual, On fuel type, there is a narrow distribution on Petrol fuel.
 ![download](https://user-images.githubusercontent.com/53232113/219169489-1a1d1eca-0d55-42f8-976b-bbd90bd99779.png)
+
+The code for EXPLORATORY ANALYSIS is [here](exploratory)
