@@ -75,3 +75,8 @@ Sixth: on feature importance,the most important predictor for our target price i
 
 The code for **LINEAR REGRESSION** is [here](linear-regression)
 
+**4. RIDGE AND GRIDSEARCHCV MODELS**
+
+In this analysis we prepare the data converting the category data to numbers, preprocess the numeric data by scaling with min-max scaling, log the price data, and model with Ridge, get a score of 88%, r2 score of 88% and a root mean square error of 16%, go to GripSearchCV model, find the best parameter for Ridge, which is alpha equals to 0.0, and get a score of 88%.
+
+The code for **RIDGE AND GRIDSEARCHCV REGRESSION MODELS** is [here](ridge)
