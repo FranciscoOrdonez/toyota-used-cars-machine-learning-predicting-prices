@@ -33,6 +33,8 @@ EXPLORATORY ANALYSIS
 
 TARGET VARIABLE: PRICE... We analyze price and change to log scale. The mean price for a car is 12522 pounds, and the price converted to a log number is 9.32. We will be using the log price for the machine learning models.
 
-We see that there is a negative correlation with mileage(-0.39), and positive correlation with year(0.55). There is no correlation with mpg. In relation to year of manufacturing, most cars in the set have been manufactured in 2017 and above. With category data, most cars in the data are model Yaris or Aygo, with manual transmission, with Petro fuel and 1.0 engine size. In data distribution by models, analyzed by boxplot graphs, there is a wider distribution on model GT86, RAV4 and Avensis, and a narrow distribution on Corollas, CH_r and Prius. On, transmision types, there is a wider distribution on Automatic and narrow on Manual, On fuel type, there is a narrow distribution on Petrol fuel.
 ![download](https://user-images.githubusercontent.com/53232113/219167241-e3c7bb2f-064a-4340-b01a-6e7884cc2674.png)
+
+![download](https://user-images.githubusercontent.com/53232113/219168418-164b5aeb-e057-4c77-9916-066ec727f88f.png)
+
 We see that there is a negative correlation with mileage(-0.39), and positive correlation with year(0.55). There is no correlation with mpg. In relation to year of manufacturing, most cars in the set have been manufactured in 2017 and above. With category data, most cars in the data are model Yaris or Aygo, with manual transmission, with Petro fuel and 1.0 engine size. In data distribution by models, analyzed by boxplot graphs, there is a wider distribution on model GT86, RAV4 and Avensis, and a narrow distribution on Corollas, CH_r and Prius. On, transmision types, there is a wider distribution on Automatic and narrow on Manual, On fuel type, there is a narrow distribution on Petrol fuel.
