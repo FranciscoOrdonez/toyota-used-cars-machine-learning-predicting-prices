@@ -4,7 +4,7 @@ A Toyota used cars dealer in England has been decreasing their sales in the last
 Here we are going to show a machine learning model for this business  that solves in a great percentaje the problem.
 For that, there is a data validation(1 below), and exploratory analysis of the data(2 below).  Then, there is an analysis of the best(6 below) of four machine learning models(3,4,5,6 below) to use to predict the best reliable and correct price of used cars.  Finally,  the conclusion(7 below) is that the reliable predictive price for used cars is possible. This  will help junior salespeople predict prices correctly,  building  their confidence to not lose clients   and  generate more sales in the future.
 
-#1. DATA VALIDATION
+##1. DATA VALIDATION
 
 This data set has 6738 rows, 9 columns. I have validated all variables and I have not made any changes after validation. All the columns are just as described in the data dictionary:
 
