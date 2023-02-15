@@ -1,0 +1,83 @@
+# import all libraries necesary for the decision tree regression modeling
+#1. convert categorical variables into numbers
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+from sklearn import preprocessing
+from sklearn.model_selection import cross_val_score
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import scale
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LinearRegression
+from sklearn.pipeline import Pipeline
+from sklearn.metrics import accuracy_score
+from sklearn.metrics import r2_score,mean_squared_error
+from sklearn.metrics import classification_report
+from sklearn.tree import DecisionTreeRegressor
+from sklearn.ensemble import GradientBoostingRegressor
+
+
+#read csv to dataframe df
+df = pd.read_csv('data/toyota.csv')
+
+#convert categorical data into numeric using find and replace method
+#convert categorical transmission  ['Manual' 'Automatic' 'Semi-Auto' 'Other'] to numeric
+numeric_var = {"transmission":{"Manual":1,"Automatic":2,"Semi-Auto":3,"Other":4}}
+df = df.replace(numeric_var) 
+
+#convert categorical typeFuel  ['Petrol' 'Other' 'Hybrid' 'Diesel'] to numeric
+numeric_var = {"fuelType":{"Petrol":1,"Hybrid":2,"Diesel":3,"Other":4}}
+df = df.replace(numeric_var)
+
+#convert categorical model [' GT86' ' Corolla' ' RAV4' ' Yaris' ' Auris' ' Aygo' ' C-HR' ' Prius'
+# ' Avensis' ' Verso' ' Hilux' ' PROACE VERSO' ' Land Cruiser' ' Supra'
+# ' Camry' ' Verso-S' ' IQ' ' Urban Cruiser'] to numeric
+
+numeric_var = {'model':{' GT86':1, ' Corolla':2, ' RAV4':3, ' Yaris':4, ' Auris':5, ' Aygo':6, ' C-HR':7, ' Prius':8, ' Avensis':9, ' Verso':10, ' Hilux':11, ' PROACE VERSO':12, ' Land Cruiser':13, ' Supra':14,' Camry':15, ' Verso-S':16, ' IQ':17, ' Urban Cruiser':18}}
+df = df.replace(numeric_var)
+
+#print head of dataframe to check how categorical data changed to numeric
+print(df.head())
+
+
+#
+#   Now, use all  eight  features for modeling and use log price using np.log
+#
+#
+feature_cols =  ['model','year','transmission','mileage','fuelType','tax','mpg','engineSize']
+price_col = ['price']
+X = df[feature_cols] # Features
+y = df[price_col] # Target variable
+y['price'] = np.log(y['price'])
+
+#
+# Now split data into train and test and use de DecisionTreeRegressor model, fit it with train data, and get # # prediction out of test data, and find r2-score between y_test and y_pred
+# The result is a 95.72% score and a mean squared error is 9.8%.
+#
+#
+SEED = 42
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=SEED)
+gbt = GradientBoostingRegressor(n_estimators=300, max_depth=10, random_state=SEED)
+gbt.fit(X_train, y_train)
+y_pred = gbt.predict(X_test)
+print('gbt r2-score:',r2_score(y_test,y_pred))
+print('gbt root mean squared error: ',np.sqrt(mean_squared_error(y_test,y_pred)))
+
+# X_new is a created dataframe converted from a dictionary of three records which represent three cars
+X_new = pd.DataFrame.from_dict({
+    'model':[4,4,4],'year':[2022,2020,2012],'transmission':[1,1,1],'mileage':[0,20000,200000],'fuelType':[1,1,1],'tax':[100,100,100],'mpg':[60,50,40],'engineSize':[1.6,1.6,1.0]})
+#
+# print three cars with 8 features each (model, year, transmission, mileage, fueltype, tax, mpg, engineSize)
+print(X_new)
+
+#
+#  predict prices of three cars with the decision tree regression model above in y_pred
+#
+y_pred = gbt.predict(X_new)
+
+#
+#  convert the log file prices to normal prices with command np.exp
+
+z = np.exp(y_pred)
+# print the predicted prices of three cars: 12227, 10182, 4713 pounds
+print(z)
