@@ -1,1 +1,79 @@
-aaa
+#
+# Show the histogram of prices and prices in log scale. The log scale give us a better norm curve
+#
+#
+fig, axes = plt.subplots(1,2,figsize=(15,5))
+sns.histplot(cars['price'],ax=axes[0]).set(title='The Distribution of Target Variable - Price')
+sns.histplot(cars['price'],log_scale=True,ax=axes[1]).set(title='The Distribution of Target Variable - Price (Log Scale)');
+
+#
+#   change price to log price. At first the mean value of price es 12522 and  after changing to 
+#    np.log is 9.32.  The graph the log price
+#
+print(cars['price'].mean())
+price = np.log(cars['price'])
+plt.hist(price.dropna(),bins=50)
+print(price.mean())
+cars['price']= np.log(cars['price'])
+
+#scatter graph comparison between price and mgp,year and milleage
+#
+#    We see on graphs, a positive correlation between price and year and a negative
+#    correlation between price and mileage.
+
+ig, axes = plt.subplots(1,3,figsize=(15,5))
+
+
+sns.scatterplot(y=cars['price'],x=cars['mpg'],ax=axes[0]).set(title='Price vs mpg')
+sns.scatterplot(y=cars['price'],x=cars['year'],ax=axes[1]).set(title='Price vs year')
+sns.scatterplot(y=cars['price'],x=cars['mileage'],ax=axes[2]).set(title='Price vs Mileage');
+
+#
+#   Graph the heatmap of numeric features to find correlation between them
+#   Comparing log price, we see a positive correlation of 0.55 with year and a negative correlation
+#   of -0.39 with mileage
+#
+numeric = cars[['price','mileage','tax','mpg','year']]
+sns.heatmap(numeric.corr(),annot=True).set(title='The Correlation Heatmap between Numeric Variables');
+
+#count of cars sold by year of manufacturing and by engine size
+# Most cars in dataset are from 2017 and above and engine size 1.0
+#
+
+fig, axes = plt.subplots(1,2,figsize=(15,5))
+sns.countplot(x=cars['year'], color='gray',ax=axes[0]).set(title='Count of Cars Sold in Manufacture Year')
+sns.countplot(x=cars['engineSize'], color='gray',ax=axes[1]).set(title='Count of Cars Sold by engine size')
+for ax in fig.axes:
+    plt.sca(ax)
+    plt.xticks(rotation=90);
+    
+#
+#   Check count of cars by model (most are ayris and aygo ), by transmission (most are manual)
+#   and by fuel type (most are Petrol)
+#
+fig, axes = plt.subplots(1,3,figsize=(15,5))
+sns.countplot(x=cars['model'],color='gray',ax=axes[0]).set(title='Count of Cars Sold in Model')
+sns.countplot(x=cars['transmission'],color='gray',ax=axes[1]).set(title='Count of Cars Sold in Transmission')
+sns.countplot(x=cars['fuelType'],color='gray',ax=axes[2]).set(title='Count of Cars Sold in Fuel Type')
+
+for ax in fig.axes:
+    plt.sca(ax)
+    plt.xticks(rotation=90);
+
+#
+#  Use the boxplot to see price distribution by model(wider GT86 and Avensis and narrow Corola),
+#  
+#graph a boxplot to check distribution on prices by transmission. The wider is automatic and 
+#   the narrow is manual
+#     Show with boxplot the distribution of price by fuel type. The wider is diesel and narrow is petrol
+#
+fig, axes = plt.subplots(1,3,figsize=(15,5))
+sns.boxplot(data=cars, x='model',y='price',ax=axes[0]).set(title='The Distribution of Price by Model')
+
+sns.boxplot(data=cars, x='transmission',y='price',ax=axes[1]).set(title='The Distribution of Price by transmission')
+sns.boxplot(data=cars, x='fuelType',y='price',ax=axes[2]).set(title='The Distribution of Price by fueltype')
+for ax in fig.axes:
+    plt.sca(ax)
+    plt.xticks(rotation=90);
+    
+    
