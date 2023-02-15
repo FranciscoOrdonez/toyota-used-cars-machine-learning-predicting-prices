@@ -72,3 +72,6 @@ Fifth: we check the score using train test split with the linear regression mode
 Sixth: on feature importance,the most important predictor for our target price is engine size, followed by year of manufacturing, transmission and mileage.
 
 ![download](https://user-images.githubusercontent.com/53232113/219202349-8cada64d-df24-4c5b-a054-9919e82299cf.png)
+
+The code for **LINEAR REGRESSION** is [here](linear-regression)
+
